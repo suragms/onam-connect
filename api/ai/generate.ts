@@ -6,19 +6,33 @@ import {
   validateGeminiResult,
 } from "../../src/lib/geminiCore";
 
-interface ApiRequest extends IncomingMessage {
-  body?: Record<string, unknown>;
+async function parseBody(req: any): Promise<Record<string, unknown>> {
+  if (req.body) {
+    if (typeof req.body === "object") return req.body;
+    if (typeof req.body === "string") {
+      try {
+        return JSON.parse(req.body);
+      } catch {
+        return {};
+      }
+    }
+  }
+  try {
+    const chunks: Buffer[] = [];
+    for await (const chunk of req) {
+      chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
+    }
+    const raw = Buffer.concat(chunks).toString("utf8");
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
 }
 
-interface ApiResponse extends ServerResponse {
-  status: (code: number) => ApiResponse;
-  json: (data: unknown) => void;
-}
-
-export default async function handler(req: ApiRequest, res: ApiResponse) {
+export default async function handler(req: IncomingMessage, res: ServerResponse) {
   if (req.method !== "POST") {
-    if (res.status && res.json) return res.status(405).json({ error: "Method Not Allowed" });
     res.statusCode = 405;
+    res.setHeader("Content-Type", "application/json");
     return res.end(JSON.stringify({ error: "Method Not Allowed" }));
   }
 
@@ -34,7 +48,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   }
 
   try {
-    const body = req.body || {};
+    const body = await parseBody(req);
     const prompt = buildPrompt({
       recipient: String(body.recipient || "Everyone"),
       recipientName: String(body.recipientName || ""),

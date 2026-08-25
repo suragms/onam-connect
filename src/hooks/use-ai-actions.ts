@@ -5,12 +5,25 @@ import type { GeneratedMessage } from "@/types/generator";
 import { validateGeminiResult } from "@/lib/geminiCore";
 
 async function localAI(path: string, body: unknown): Promise<GeneratedMessage> {
-  const res = await fetch(path, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  const data = await res.json();
+  let res: Response;
+  try {
+    res = await fetch(path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch {
+    throw new Error("Unable to connect to the server. Please check your internet connection.");
+  }
+
+  const rawText = await res.text();
+  let data: any;
+  try {
+    data = JSON.parse(rawText);
+  } catch {
+    throw new Error("Server returned an unexpected response. Please check your configuration and try again.");
+  }
+
   if (!res.ok) {
     throw new Error(data.error || "We couldn't create your wish right now. Please try again.");
   }
