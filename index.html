@@ -27,6 +27,17 @@
   <meta name="theme-color" content="#2d6a4f" />
 </head>
 <body>
+  <script>
+    window.addEventListener('error', function (e) {
+      if (e.target && (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK')) {
+        var key = 'onam_bundle_reload';
+        if (!sessionStorage.getItem(key)) {
+          sessionStorage.setItem(key, '1');
+          window.location.reload();
+        }
+      }
+    }, true);
+  </script>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
   <script type="application/ld+json">
