@@ -53,60 +53,25 @@ function toLegacyGenerateArgs(args: Record<string, unknown>) {
 
 /** Dev uses local Vite API only (Convex cloud may be on an old schema). */
 export function useAIActions() {
-  const convexGenerate = useAction(api.generateMessage.generateMessage);
-  const convexImprove = useAction(api.generateMessage.improveMessage);
-  const convexCaption = useAction(api.generateMessage.generateSocialCaption);
-
   const generateMessage = useCallback(
     async (args: Record<string, unknown>) => {
-      if (import.meta.env.DEV) {
-        return localAI("/api/ai/generate", args);
-      }
-      try {
-        const legacyArgs = toLegacyGenerateArgs(args);
-        return validateGeminiResult(
-          await convexGenerate(legacyArgs as Parameters<typeof convexGenerate>[0]),
-        ) as GeneratedMessage;
-      } catch (err) {
-        console.warn("[Convex Action Failed, trying Vercel /api/ai/generate fallback]:", err);
-        return localAI("/api/ai/generate", args);
-      }
+      return localAI("/api/ai/generate", args);
     },
-    [convexGenerate],
+    [],
   );
 
   const improveMessage = useCallback(
     async (args: Record<string, unknown>) => {
-      if (import.meta.env.DEV) {
-        return localAI("/api/ai/improve", args);
-      }
-      try {
-        return validateGeminiResult(
-          await convexImprove(args as Parameters<typeof convexImprove>[0]),
-        ) as GeneratedMessage;
-      } catch (err) {
-        console.warn("[Convex Action Failed, trying Vercel /api/ai/improve fallback]:", err);
-        return localAI("/api/ai/improve", args);
-      }
+      return localAI("/api/ai/improve", args);
     },
-    [convexImprove],
+    [],
   );
 
   const generateSocialCaption = useCallback(
     async (args: Record<string, unknown>) => {
-      if (import.meta.env.DEV) {
-        return localAI("/api/ai/social-caption", args);
-      }
-      try {
-        return validateGeminiResult(
-          await convexCaption(args as Parameters<typeof convexCaption>[0]),
-        ) as GeneratedMessage;
-      } catch (err) {
-        console.warn("[Convex Action Failed, trying Vercel /api/ai/social-caption fallback]:", err);
-        return localAI("/api/ai/social-caption", args);
-      }
+      return localAI("/api/ai/social-caption", args);
     },
-    [convexCaption],
+    [],
   );
 
   return { generateMessage, improveMessage, generateSocialCaption, toLegacyGenerateArgs };
