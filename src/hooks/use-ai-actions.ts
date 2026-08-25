@@ -63,8 +63,9 @@ export function useAIActions() {
         return localAI("/api/ai/generate", args);
       }
       try {
+        const legacyArgs = toLegacyGenerateArgs(args);
         return validateGeminiResult(
-          await convexGenerate(args as Parameters<typeof convexGenerate>[0]),
+          await convexGenerate(legacyArgs as Parameters<typeof convexGenerate>[0]),
         ) as GeneratedMessage;
       } catch (err) {
         console.warn("[Convex Action Failed, trying Vercel /api/ai/generate fallback]:", err);
