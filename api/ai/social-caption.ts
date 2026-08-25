@@ -1,8 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-
 interface SocialCaptionRequest {
   platform: string;
   recipient: string;
@@ -54,10 +52,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return res.status(503).json({ error: 'GEMINI_API_KEY is not configured' });
+    return res.status(503).json({ error: 'GEMINI_API_KEY is not configured in Vercel environment variables.' });
   }
 
   try {
+    const genAI = new GoogleGenerativeAI(apiKey);
     const body = req.body as SocialCaptionRequest;
     const { platform, recipient, language, tone } = body;
 
@@ -67,7 +66,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const prompt = buildSocialCaptionPrompt(body);
 
-    const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest', 'gemini-2.5-pro'];
+    const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
     let text = '';
     let lastErr: any = null;
 
@@ -85,13 +84,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         });
         text = result.response.text();
         if (text) break;
-      } catch (err) {
+      } catch (err: any) {
         lastErr = err;
-        console.warn(`[Vercel AI Model ${modelName} failed]:`, err);
+        console.warn(`[Vercel AI Model ${modelName} failed]:`, err?.message || err);
       }
     }
 
-    if (!text && lastErr) throw lastErr;
+    if (!text) {
+      const errMsg = lastErr?.message || 'Gemini AI service unavailable. Please try again.';
+      return res.status(500).json({ error: errMsg });
+    }
 
     const parsed = parseGeminiResponse(text);
 
