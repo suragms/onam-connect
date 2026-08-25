@@ -37,7 +37,7 @@ export function ShareIconRow({ message, className = "" }: ShareIconRowProps) {
   }
 
   return (
-    <div className={`flex items-center gap-1.5 border-t border-border/40 pt-3 ${className}`}>
+    <div className={`flex flex-wrap items-center gap-1.5 border-t border-border/40 pt-3 ${className}`}>
       <span className="mr-1 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
         Share
       </span>

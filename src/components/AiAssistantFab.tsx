@@ -64,7 +64,7 @@ export function AiAssistantFab({
           "h-16 w-16 bg-primary text-primary-foreground",
           "ring-4 ring-background hover:brightness-105 transition-[filter,box-shadow]",
           /* WhatsApp Meta AI style: float above fixed bottom nav */
-          "bottom-[calc(var(--mobile-nav-height,3.5rem)+1rem+env(safe-area-inset-bottom,0px))] right-4",
+          "bottom-[calc(var(--mobile-nav-height,72px)+1rem+env(safe-area-inset-bottom,0px))] right-4",
           "lg:bottom-8 lg:right-8",
         )}
       >

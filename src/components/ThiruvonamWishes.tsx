@@ -14,20 +14,6 @@ interface ThiruvonamWish {
   category: string;
 }
 
-const CATEGORIES = [
-  { id: "all", label: "🌼 All", emoji: "🌼" },
-  { id: "General", label: "🌼 General", emoji: "🌼" },
-  { id: "Family", label: "👨‍👩‍👧 Family", emoji: "👨‍👩‍👧" },
-  { id: "Friends", label: "❤️ Friends", emoji: "❤️" },
-  { id: "Loved Ones", label: "👩‍❤️‍👨 Loved Ones", emoji: "👩‍❤️‍👨" },
-  { id: "Office", label: "💼 Office", emoji: "💼" },
-  { id: "Business", label: "🏢 Business", emoji: "🏢" },
-  { id: "WhatsApp", label: "📱 WhatsApp", emoji: "📱" },
-  { id: "Instagram", label: "📸 Instagram", emoji: "📸" },
-  { id: "Malayalam", label: "🇮🇳 Malayalam", emoji: "🇮🇳" },
-  { id: "Manglish", label: "🔤 Manglish", emoji: "🔤" },
-] as const;
-
 const THIRUVONAM_WISHES: ThiruvonamWish[] = [
   // Malayalam wishes (5)
   {
@@ -217,38 +203,38 @@ export function ThiruvonamWishes() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
+          className="mb-10 sm:mb-12 text-center"
         >
-          <p className="mb-3 text-sm font-medium uppercase tracking-wider text-primary">
+          <p className="mb-3 text-sm sm:text-base font-medium uppercase tracking-wider text-primary">
             🌼 Thiruvonam Wishes 2026
           </p>
-          <h2 id="thiruvonam-heading" className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+          <h2 id="thiruvonam-heading" className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight leading-tight">
             Share the joy, prosperity and togetherness of{" "}
             <span className="onam-text-gradient">Thiruvonam</span>
             with beautiful wishes created by AI.
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed">
+          <p className="mx-auto mt-4 max-w-2xl text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed">
             Create heartfelt Thiruvonam wishes in Malayalam, English or Manglish and share them with your family, friends and loved ones.
           </p>
 
           {/* Primary CTAs */}
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <div className="mt-6 sm:mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <Button
               onClick={() => navigateToGenerator({ occasion: "Thiruvonam" })}
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] cursor-pointer min-h-[48px] shadow-lg"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] cursor-pointer min-h-[48px] shadow-lg"
               size="lg"
             >
-              <Sparkles className="h-5 w-5" />
+              <Sparkles className="h-4 sm:h-5 w-4 sm:w-5" />
               ✨ Create Thiruvonam Wish
             </Button>
             <Button
               variant="outline"
               onClick={() => navigate("/templates?occasion=Thiruvonam")}
-              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-8 py-4 text-base font-semibold transition-all hover:bg-accent/50 cursor-pointer min-h-[48px]"
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold transition-all hover:bg-accent/50 cursor-pointer min-h-[48px]"
               size="lg"
             >
               Explore Wishes
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
             </Button>
           </div>
         </motion.div>
@@ -289,7 +275,7 @@ export function ThiruvonamWishes() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {filteredWishes.map((wish, index) => (
               <motion.div
                 key={wish.id}
@@ -297,11 +283,11 @@ export function ThiruvonamWishes() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group relative rounded-2xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:shadow-md hover:border-primary/30"
+                className="group relative rounded-2xl border border-border/60 bg-card p-4 sm:p-5 shadow-sm transition-all hover:shadow-md hover:border-primary/30"
               >
-                <div className="mb-3 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+                <div className="mb-3 flex items-center justify-between flex-wrap gap-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary text-wrap">
                       {wish.category}
                     </span>
                     <span className="text-xs text-muted-foreground">
@@ -310,15 +296,15 @@ export function ThiruvonamWishes() {
                   </div>
                 </div>
 
-                <p className="mb-4 leading-relaxed text-sm sm:text-base text-foreground/80 whitespace-pre-line">
+                <p className="mb-4 leading-relaxed text-sm sm:text-base text-foreground/80 whitespace-pre-line text-wrap break-words">
                   {wish.message}
                 </p>
 
-                <div className="flex flex-wrap gap-2 pt-2 border-t border-border/40">
+                <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-border/40">
                   <button
                     type="button"
                     onClick={() => handleCopy(wish.id, wish.message)}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-muted px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground cursor-pointer min-h-[44px] flex-1 sm:flex-none"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-muted px-3 py-2.5 text-xs sm:text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground cursor-pointer min-h-[44px] sm:min-h-[40px] lg:min-h-[36px] flex-1 text-wrap"
                   >
                     {copiedId === wish.id ? (
                       <>
@@ -330,7 +316,7 @@ export function ThiruvonamWishes() {
                       </>
                     )}
                   </button>
-                  <ShareIconRow message={wish.message} className="flex-1" />
+                  <ShareIconRow message={wish.message} className="flex-1 min-w-[140px]" />
                 </div>
               </motion.div>
             ))}
@@ -351,8 +337,8 @@ export function ThiruvonamWishes() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-12"
         >
-          <h3 className="mb-6 text-center text-2xl font-bold tracking-tight">Quick Thiruvonam Actions</h3>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <h3 className="mb-6 text-center text-2xl sm:text-2xl lg:text-3xl font-bold tracking-tight">Quick Thiruvonam Actions</h3>
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {QUICK_ACTIONS.map((action, index) => (
               <motion.button
                 key={action.label}
@@ -362,13 +348,13 @@ export function ThiruvonamWishes() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="w-full rounded-2xl border border-border/60 bg-card p-5 text-left transition-all hover:border-primary/30 hover:shadow-md cursor-pointer min-h-[48px]"
+                className="w-full rounded-2xl border border-border/60 bg-card p-4 sm:p-5 text-left transition-all hover:border-primary/30 hover:shadow-md cursor-pointer min-h-[48px] sm:min-h-[52px]"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0">
                     <Sparkles className="h-5 w-5" />
                   </div>
-                  <span className="text-sm font-medium text-foreground">{action.label}</span>
+                  <span className="text-sm sm:text-base font-medium text-foreground text-wrap">{action.label}</span>
                 </div>
               </motion.button>
             ))}
@@ -383,39 +369,39 @@ export function ThiruvonamWishes() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16"
         >
-          <div className="relative rounded-3xl border border-border/60 bg-gradient-to-br from-primary/5 via-background to-amber-50/30 p-8 sm:p-12 shadow-lg overflow-hidden">
+          <div className="relative rounded-3xl border border-border/60 bg-gradient-to-br from-primary/5 via-background to-amber-50/30 p-6 sm:p-8 lg:p-12 shadow-lg overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute top-4 right-4 w-32 h-32 rounded-full bg-primary/10 blur-2xl" aria-hidden="true" />
             <div className="absolute bottom-4 left-4 w-24 h-24 rounded-full bg-amber-200/30 blur-2xl" aria-hidden="true" />
 
             <div className="relative text-center">
-              <span className="text-4xl" aria-hidden="true">🎨</span>
-              <h3 className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
+              <span className="text-3xl sm:text-4xl" aria-hidden="true">🎨</span>
+              <h3 className="mt-4 text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight">
                 Create a <span className="onam-text-gradient">Thiruvonam Greeting Card</span>
               </h3>
-              <p className="mx-auto mt-3 max-w-md text-base sm:text-lg text-muted-foreground leading-relaxed">
+              <p className="mx-auto mt-3 max-w-md text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed">
                 Turn your Thiruvonam wish into a beautiful Kerala-inspired greeting card. Download as PNG and share everywhere.
               </p>
 
               <div className="mt-6 flex flex-wrap justify-center gap-2">
                 {CARD_STYLES.slice(0, 4).map((style) => (
-                  <span key={style} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                  <span key={style} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary text-wrap">
                     {style}
                   </span>
                 ))}
-                <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
+                <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground text-wrap">
                   +{CARD_STYLES.length - 4} more
                 </span>
               </div>
 
               <Button
                 onClick={() => navigateToCards()}
-                className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] cursor-pointer min-h-[48px] shadow-lg"
+                className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] cursor-pointer min-h-[48px] shadow-lg"
                 size="lg"
               >
-                <Sparkles className="h-5 w-5" />
+                <Sparkles className="h-4 sm:h-5 w-4 sm:w-5" />
                 Create Thiruvonam Card
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
               </Button>
             </div>
           </div>
@@ -429,20 +415,20 @@ export function ThiruvonamWishes() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-16 text-center"
         >
-          <div className="rounded-2xl border border-border/60 bg-card p-8 sm:p-10">
-            <span className="text-3xl" aria-hidden="true">✨</span>
-            <h3 className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
+          <div className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8 lg:p-10">
+            <span className="text-3xl sm:text-4xl" aria-hidden="true">✨</span>
+            <h3 className="mt-4 text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight">
               Want a more personal <span className="onam-text-gradient">Thiruvonam wish</span>?
             </h3>
-            <p className="mx-auto mt-3 max-w-md text-base sm:text-lg text-muted-foreground leading-relaxed">
+            <p className="mx-auto mt-3 max-w-md text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed">
               Tell AI who you&apos;re wishing and the kind of message you want. Get a unique, personalized Thiruvonam wish in seconds.
             </p>
             <Button
               onClick={() => navigateToGenerator({ occasion: "Thiruvonam" })}
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] cursor-pointer min-h-[48px]"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] cursor-pointer min-h-[48px]"
               size="lg"
             >
-              <Sparkles className="h-5 w-5" />
+              <Sparkles className="h-4 sm:h-5 w-4 sm:w-5" />
               Personalize with AI
             </Button>
           </div>
@@ -456,10 +442,10 @@ export function ThiruvonamWishes() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-16"
         >
-          <h3 className="mb-8 text-center text-2xl font-bold tracking-tight">
+          <h3 className="mb-8 text-center text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight">
             Thiruvonam <span className="onam-text-gradient">FAQ</span>
           </h3>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
             {THIRUVONAM_FAQS.map((faq, index) => (
               <motion.div
                 key={faq.q}
@@ -467,7 +453,7 @@ export function ThiruvonamWishes() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="rounded-2xl border border-border/60 bg-card p-5 transition-all hover:border-primary/30"
+                className="rounded-2xl border border-border/60 bg-card p-4 sm:p-5 transition-all hover:border-primary/30"
               >
                 <h4 className="font-semibold text-sm sm:text-base">{faq.q}</h4>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{faq.a}</p>

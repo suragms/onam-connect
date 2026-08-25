@@ -59,18 +59,21 @@ const listStyle: CSSProperties = {
   boxSizing: "border-box",
 };
 
-const primaryButtonStyle: CSSProperties = {
+const primaryButtonStyle = (active: boolean): CSSProperties => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
   gap: 3,
-  padding: "4px 2px",
+  padding: active ? "5px 10px" : "4px 2px",
+  borderRadius: 14,
   textDecoration: "none",
   color: "oklch(0.55 0.18 145)",
+  backgroundColor: active ? "oklch(0.55 0.18 145 / 0.1)" : "transparent",
+  transition: "background-color 0.2s ease, padding 0.2s ease, transform 0.2s ease",
   WebkitTapHighlightColor: "transparent",
   touchAction: "manipulation",
-};
+});
 
 const primaryIconStyle = (active: boolean) => ({
   width: active ? 26 : 24,
@@ -95,18 +98,21 @@ const primaryLabelStyle = (active: boolean) => ({
   transition: "all 0.2s ease",
 });
 
-const regularButtonStyle: CSSProperties = {
+const regularButtonStyle = (active: boolean): CSSProperties => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
   gap: 3,
-  padding: "4px 2px",
+  padding: active ? "5px 10px" : "4px 2px",
+  borderRadius: 14,
   textDecoration: "none",
-  color: "oklch(0.5 0.01 160)",
+  color: active ? "oklch(0.55 0.18 145)" : "oklch(0.5 0.01 160)",
+  backgroundColor: active ? "oklch(0.55 0.18 145 / 0.1)" : "transparent",
+  transition: "background-color 0.2s ease, padding 0.2s ease",
   WebkitTapHighlightColor: "transparent",
   touchAction: "manipulation",
-};
+});
 
 const regularIconStyle = (active: boolean) => ({
   width: 22,
@@ -131,7 +137,7 @@ const regularLabelStyle = (active: boolean) => ({
   transition: "all 0.2s ease",
 });
 
-const primaryButtonContainerStyle = (active: boolean): CSSProperties => ({
+const primaryButtonContainerStyle: CSSProperties = ({
   flex: "1 1 0",
   minWidth: 0,
   display: "flex",
@@ -205,7 +211,7 @@ export function MobileBottomNav() {
                   aria-label={tab.label}
                   aria-expanded={isMoreOpen}
                   aria-controls="more-bottom-sheet"
-                  style={regularButtonStyle}
+                  style={regularButtonStyle(active)}
                 >
                   <Icon
                     {...regularIconStyle(active)}
@@ -223,13 +229,13 @@ export function MobileBottomNav() {
           // Primary Create button
           if (isPrimaryTab) {
             return (
-              <li key={tab.href} style={primaryButtonContainerStyle(active)}>
+              <li key={tab.href} style={primaryButtonContainerStyle}>
                 <Link
                   to={tab.href}
                   aria-label={tab.label}
                   aria-current={active ? "page" : undefined}
                   style={{
-                    ...primaryButtonStyle,
+                    ...primaryButtonStyle(active),
                     ...(active && {
                       transform: "scale(1.02)",
                     }),
@@ -271,7 +277,7 @@ export function MobileBottomNav() {
                 to={tab.href}
                 aria-label={tab.label}
                 aria-current={active ? "page" : undefined}
-                style={regularButtonStyle}
+                style={regularButtonStyle(active)}
               >
                 <Icon
                   {...regularIconStyle(active)}

@@ -19,18 +19,20 @@ export default function NotFound() {
             <div className="text-center">
               <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-foreground mb-4">404</h1>
               <p className="text-lg sm:text-xl text-muted-foreground mb-8">Page Not Found</p>
-              <Link
-                to="/"
-                className="inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-3 text-base font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] cursor-pointer min-h-[48px]"
-              >
-                <Home className="h-4 w-4" /> Go Home
-              </Link>
-              <Link
-                to="/generator"
-                className="ml-3 inline-flex items-center gap-2 rounded-xl border border-border bg-background px-8 py-3 text-base font-semibold text-foreground transition-all hover:bg-accent active:scale-[0.98] cursor-pointer min-h-[48px]"
-              >
-                <Sparkles className="h-4 w-4" /> Create Wish
-              </Link>
+              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link
+                  to="/"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3 text-base font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] cursor-pointer min-h-[48px]"
+                >
+                  <Home className="h-4 w-4" /> Go Home
+                </Link>
+                <Link
+                  to="/generator"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-background px-8 py-3 text-base font-semibold text-foreground transition-all hover:bg-accent active:scale-[0.98] cursor-pointer min-h-[48px] sm:w-auto"
+                >
+                  <Sparkles className="h-4 w-4" /> Create Wish
+                </Link>
+              </div>
             </div>
           </motion.div>
         </div>
