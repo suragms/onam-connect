@@ -1,5 +1,5 @@
 import "@vly-ai/integrations";
-import { Toaster } from "@/components/ui/sonner";
+import Toaster from "@/components/ui/sonner";
 import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";

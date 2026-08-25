@@ -20,9 +20,13 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 sm:py-12">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link to="/" className="flex items-center gap-2 font-bold text-lg tracking-tight">
-              <span aria-hidden="true">🌼</span>
-              ONAMCONNECT
+            <Link to="/" className="flex items-center gap-2.5 font-bold text-lg tracking-tight group">
+              <img
+                src="/logo.jpg"
+                alt="ONAMCONNECT Logo"
+                className="h-8 w-8 rounded-lg object-cover border border-primary/20 shadow-xs"
+              />
+              <span className="onam-text-gradient font-extrabold tracking-wide">ONAMCONNECT</span>
             </Link>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
               AI-powered Onam wishes, created in seconds. Create. Celebrate. Connect.

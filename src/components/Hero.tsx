@@ -75,72 +75,45 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative lg:order-first"
+            className="relative lg:order-last"
           >
-            {/* Mobile Example Card */}
-            <div className="lg:hidden mb-6">
-              <div className="relative rounded-2xl border border-border/60 bg-card p-5">
-                <div className="mb-3 flex items-center justify-center gap-2">
-                  <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border" />
-                  <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">Onam 2026</span>
-                  <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border" />
-                </div>
+            <div className="relative mx-auto max-w-md lg:max-w-none group">
+              {/* Glowing Background Blur */}
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-primary via-amber-500 to-emerald-600 opacity-30 blur-xl transition-all group-hover:opacity-50" />
 
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={exampleIdx}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <p className="mb-2 text-center text-xs font-medium text-primary">{EXAMPLES[exampleIdx].lang}</p>
-                    <p className="text-center text-sm leading-relaxed text-muted-foreground">
-                      {EXAMPLES[exampleIdx].text}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
+              {/* Cover Photo Banner */}
+              <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-2xl">
+                <img
+                  src="/cover.jpg"
+                  alt="ONAMCONNECT Cover - AI Onam Wishes & Greeting Cards"
+                  className="w-full h-auto aspect-video object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                />
 
-                <div className="mt-4 flex justify-center gap-2 text-xs text-primary/70">
-                  <span>#Onam</span>
-                  <span>#HappyOnam</span>
-                  <span>#ONAMCONNECT</span>
-                </div>
-              </div>
-            </div>
+                <div className="p-4 bg-card/95 backdrop-blur-md border-t border-border/50">
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-primary">Onam 2026 Live Preview</span>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-600 dark:text-amber-400">
+                      <Sparkles className="h-3 w-3" /> AI Wish Generator
+                    </span>
+                  </div>
 
-            {/* Desktop Decorative Card */}
-            <div className="hidden lg:block relative mx-auto max-w-sm">
-              <PookalamDecorative className="absolute -left-10 -top-10 h-64 w-64" />
-              <div className="relative rounded-3xl border border-border/60 bg-card p-8">
-                <div className="mb-4 flex items-center justify-center gap-2">
-                  <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border" />
-                  <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">Onam 2026</span>
-                  <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border" />
-                </div>
-
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={exampleIdx}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <p className="mb-2 text-center text-xs font-medium text-primary">{EXAMPLES[exampleIdx].lang}</p>
-                    <p className="text-center text-sm leading-relaxed text-muted-foreground">
-                      {EXAMPLES[exampleIdx].text}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
-
-                <div className="mt-5 flex justify-center gap-2 text-xs text-primary/70">
-                  <span>#Onam</span>
-                  <span>#HappyOnam</span>
-                  <span>#ONAMCONNECT</span>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={exampleIdx}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <p className="text-xs font-medium text-muted-foreground">{EXAMPLES[exampleIdx].lang}:</p>
+                      <p className="text-sm font-semibold text-foreground line-clamp-2">
+                        "{EXAMPLES[exampleIdx].text}"
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </div>
             </div>

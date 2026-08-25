@@ -35,9 +35,13 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/90 backdrop-blur-xl" role="navigation" aria-label="Main navigation">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-2 font-bold text-lg tracking-tight flex-none">
-          <span className="text-xl" aria-hidden="true">🌼</span>
-          <span>ONAMCONNECT</span>
+        <Link to="/" className="flex items-center gap-2.5 font-bold text-lg tracking-tight flex-none group">
+          <img
+            src="/logo.jpg"
+            alt="ONAMCONNECT Logo"
+            className="h-9 w-9 rounded-xl object-cover border border-primary/20 shadow-xs transition-transform group-hover:scale-105"
+          />
+          <span className="onam-text-gradient font-extrabold tracking-wide">ONAMCONNECT</span>
         </Link>
 
         {/* Desktop Navigation */}
