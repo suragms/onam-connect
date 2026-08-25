@@ -5,8 +5,12 @@ import { internal } from "./_generated/api";
 import type { ActionCtx } from "./_generated/server";
 import { v } from "convex/values";
 
-const GEMINI_API_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+const GEMINI_MODELS = [
+  "gemini-2.5-flash",
+  "gemini-2.0-flash",
+  "gemini-1.5-flash-latest",
+  "gemini-2.5-pro",
+] as const;
 
 const MAX_INSTRUCTIONS = 500;
 const MAX_NAME = 80;
@@ -98,12 +102,17 @@ RESPOND IN VALID JSON ONLY — no markdown, no code fences:
 }`;
 }
 
-async function callGemini(apiKey: string, prompt: string) {
+async function callGeminiOnce(
+  apiKey: string,
+  model: string,
+  prompt: string,
+): Promise<string> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 30000);
 
   try {
-    const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       signal: controller.signal,
@@ -124,13 +133,20 @@ async function callGemini(apiKey: string, prompt: string) {
     });
 
     if (!response.ok) {
+      let detail = "";
+      try {
+        const errBody = await response.json();
+        detail = errBody?.error?.message || "";
+      } catch {
+        /* ignore */
+      }
       if (response.status === 429) {
-        throw new Error("Rate limit reached. Please wait a moment and try again.");
+        throw new Error("Rate limit reached. Please wait a moment.");
       }
       if (response.status === 401 || response.status === 403) {
-        throw new Error("AI service is temporarily unavailable. Please try again later.");
+        throw new Error("AI service is temporarily unavailable. Please check the API key.");
       }
-      throw new Error("We couldn't create your wish right now. Please try again.");
+      throw new Error(detail || "Model request failed.");
     }
 
     const data = await response.json();
@@ -140,6 +156,21 @@ async function callGemini(apiKey: string, prompt: string) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+async function callGemini(apiKey: string, prompt: string): Promise<string> {
+  let lastError: Error | null = null;
+  for (const model of GEMINI_MODELS) {
+    try {
+      return await callGeminiOnce(apiKey, model, prompt);
+    } catch (e: unknown) {
+      lastError = e instanceof Error ? e : new Error(String(e));
+      console.warn(`[Gemini Model ${model} failed]:`, lastError.message);
+    }
+  }
+  throw new Error(
+    lastError?.message || "AI is busy right now. Please wait a few seconds and try again.",
+  );
 }
 
 function parseGeminiResponse(text: string) {
@@ -274,7 +305,8 @@ export const generateSocialCaption = action({
       throw new Error("You've reached the hourly generation limit. Please wait and try again.");
     }
 
-    const charLimit = args.platform === "X" ? 280 : args.platform === "WhatsApp Status" ? 200 : 500;
+    const charLimit =
+      args.platform === "X" ? 280 : args.platform === "WhatsApp Status" ? 200 : 500;
 
     const prompt = `Create an Onam social caption for ${args.platform}.
 Recipient: ${args.recipient}
