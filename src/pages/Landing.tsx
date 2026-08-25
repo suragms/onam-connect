@@ -5,6 +5,7 @@ import { MessageTemplates } from "@/components/MessageTemplates";
 import { Features } from "@/components/Features";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
+import { ThiruvonamWishes } from "@/components/ThiruvonamWishes";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { Sparkles } from "lucide-react";
@@ -16,6 +17,7 @@ export default function Landing() {
       <main>
         <Hero />
         <HowItWorks />
+        <ThiruvonamWishes />
         <MessageTemplates />
         <Features />
 
