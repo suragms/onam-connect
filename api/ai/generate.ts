@@ -143,17 +143,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const body = req.body as GenerateRequest;
     const prompt = buildPrompt(body);
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    const result = await model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.88,
-        topP: 0.95,
-        maxOutputTokens: 2048,
-        responseMimeType: "application/json",
-      },
-    });
-    const text = result.response.text();
+    const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest', 'gemini-2.5-pro'];
+    let text = '';
+    let lastErr: any = null;
+
+    for (const modelName of modelsToTry) {
+      try {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        const result = await model.generateContent({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.88,
+            topP: 0.95,
+            maxOutputTokens: 2048,
+            responseMimeType: "application/json",
+          },
+        });
+        text = result.response.text();
+        if (text) break;
+      } catch (err) {
+        lastErr = err;
+        console.warn(`[Vercel AI Model ${modelName} failed]:`, err);
+      }
+    }
+
+    if (!text && lastErr) throw lastErr;
 
     const parsed = parseGeminiResponse(text);
 
