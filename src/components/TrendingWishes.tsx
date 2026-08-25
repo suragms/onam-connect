@@ -15,7 +15,7 @@ export function TrendingWishes({ onSelect }: TrendingWishesProps) {
             key={item.title}
             type="button"
             onClick={() => onSelect(item.config as Partial<GeneratorConfig>)}
-            className="rounded-full border border-border/60 px-3 py-2 text-xs font-medium hover:border-primary/40 hover:bg-primary/5 cursor-pointer min-h-[36px] text-left"
+            className="rounded-full border border-border/60 bg-muted/40 px-3 py-2.5 text-xs font-medium transition-colors hover:border-primary/40 hover:bg-primary/5 cursor-pointer min-h-[40px] sm:min-h-[36px] lg:min-h-[32px] flex-1 sm:flex-none text-wrap text-left"
           >
             {item.title}
           </button>

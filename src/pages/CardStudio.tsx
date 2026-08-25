@@ -80,7 +80,7 @@ export default function CardStudioPage() {
               <label className="text-sm font-medium">Template</label>
               <div className="mt-2 flex flex-wrap gap-2">
                 {CARD_TEMPLATES.map((t) => (
-                  <button key={t} type="button" onClick={() => setTemplate(t)} className={`rounded-full border px-3 py-2 text-xs cursor-pointer min-h-[40px] ${template === t ? "border-primary bg-primary/10" : ""}`}>
+                  <button key={t} type="button" onClick={() => setTemplate(t)} className={`rounded-full border border-border/60 bg-muted/40 px-3 py-2.5 text-xs font-medium transition-colors hover:border-primary/40 hover:bg-primary/5 cursor-pointer min-h-[44px] sm:min-h-[40px] lg:min-h-[36px] flex-1 sm:flex-none text-wrap ${template === t ? "border-primary bg-primary/10" : ""}`}>
                     {t}
                   </button>
                 ))}
@@ -91,7 +91,7 @@ export default function CardStudioPage() {
               <label className="text-sm font-medium">Format</label>
               <div className="mt-2 flex flex-wrap gap-2">
                 {CARD_FORMATS.map((f) => (
-                  <button key={f.id} type="button" onClick={() => setFormat(f)} className={`rounded-full border px-3 py-2 text-xs cursor-pointer min-h-[40px] ${format.id === f.id ? "border-primary bg-primary/10" : ""}`}>
+                  <button key={f.id} type="button" onClick={() => setFormat(f)} className={`rounded-full border border-border/60 bg-muted/40 px-3 py-2.5 text-xs font-medium transition-colors hover:border-primary/40 hover:bg-primary/5 cursor-pointer min-h-[44px] sm:min-h-[40px] lg:min-h-[36px] flex-1 sm:flex-none text-wrap ${format.id === f.id ? "border-primary bg-primary/10" : ""}`}>
                     {f.label} ({f.width}×{f.height})
                   </button>
                 ))}
@@ -121,7 +121,7 @@ export default function CardStudioPage() {
               </div>
               <div>
                 <label className="text-sm font-medium">Alignment</label>
-                <select value={alignment} onChange={(e) => setAlignment(e.target.value as typeof alignment)} className="mt-2 w-full rounded-xl border px-3 py-2 text-base min-h-[48px]">
+                <select value={alignment} onChange={(e) => setAlignment(e.target.value as typeof alignment)} className="mt-2 w-full rounded-xl border px-4 py-3.5 text-base min-h-[48px] sm:min-h-[48px] lg:min-h-[44px]">
                   <option value="left">Left</option>
                   <option value="center">Center</option>
                   <option value="right">Right</option>

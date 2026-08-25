@@ -173,7 +173,7 @@ export default function SavedPage() {
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
-                className="w-full sm:w-auto rounded-xl border border-input px-4 py-3 text-base min-h-[48px]"
+                className="w-full sm:w-auto rounded-xl border border-input px-4 py-3.5 text-base min-h-[48px] sm:min-h-[48px] lg:min-h-[44px]"
               >
                 <option value="all">All</option>
                 <option value="Malayalam">Malayalam</option>
@@ -217,7 +217,7 @@ export default function SavedPage() {
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
-                className="w-full sm:w-auto rounded-xl border border-input px-4 py-3 text-base min-h-[48px]"
+                className="w-full sm:w-auto rounded-xl border border-input px-4 py-3.5 text-base min-h-[48px] sm:min-h-[48px] lg:min-h-[44px]"
               >
                 <option value="all">All</option>
                 <option value="Malayalam">Malayalam</option>

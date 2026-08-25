@@ -52,11 +52,11 @@ export function SocialCaptionGenerator({ onGenerated, onError, onLoadingChange }
       <select
         value={platform}
         onChange={(e) => setPlatform(e.target.value)}
-        className="mt-3 w-full rounded-xl border border-input bg-background px-4 py-3 text-base min-h-[48px]"
+        className="mt-3 w-full rounded-xl border border-input bg-background px-4 py-3.5 text-base min-h-[48px] sm:min-h-[48px] lg:min-h-[44px]"
       >
         {SOCIAL_PLATFORMS.map((p) => <option key={p} value={p}>{p}</option>)}
       </select>
-      <Button onClick={handleGenerate} disabled={loading} className="mt-3 w-full cursor-pointer min-h-[48px]">
+      <Button onClick={handleGenerate} disabled={loading} className="mt-3 w-full cursor-pointer min-h-[48px] sm:min-h-[48px] lg:min-h-[44px]">
         {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
         Generate Caption
       </Button>

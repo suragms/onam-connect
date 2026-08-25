@@ -66,7 +66,7 @@ export default function HistoryPage() {
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search wishes…" className="pl-9 rounded-xl min-h-[48px] text-base" />
           </div>
-          <select value={filter} onChange={(e) => setFilter(e.target.value)} className="w-full sm:w-auto rounded-xl border border-input px-4 py-3 text-base min-h-[48px]">
+          <select value={filter} onChange={(e) => setFilter(e.target.value)} className="w-full sm:w-auto rounded-xl border border-input px-4 py-3.5 text-base min-h-[48px] sm:min-h-[48px] lg:min-h-[44px]">
             <option value="all">All</option>
             <option value="Malayalam">Malayalam</option>
             <option value="English">English</option>

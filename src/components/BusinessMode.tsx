@@ -67,15 +67,15 @@ export function BusinessMode({ onGenerated, onError, onLoadingChange }: Business
 
       {open && (
         <div className="mt-4 space-y-3">
-          <Input value={businessName} onChange={(e) => setBusinessName(e.target.value)} placeholder="Business name" className="rounded-xl min-h-[48px] text-base" />
-          <Input value={industry} onChange={(e) => setIndustry(e.target.value)} placeholder="Industry (optional)" className="rounded-xl min-h-[48px] text-base" />
-          <select value={customerType} onChange={(e) => setCustomerType(e.target.value)} className="w-full rounded-xl border px-4 py-3 text-base min-h-[48px]">
+          <Input value={businessName} onChange={(e) => setBusinessName(e.target.value)} placeholder="Business name" className="rounded-xl min-h-[48px] sm:min-h-[48px] lg:min-h-[44px] text-base" />
+          <Input value={industry} onChange={(e) => setIndustry(e.target.value)} placeholder="Industry (optional)" className="rounded-xl min-h-[48px] sm:min-h-[48px] lg:min-h-[44px] text-base" />
+          <select value={customerType} onChange={(e) => setCustomerType(e.target.value)} className="w-full rounded-xl border px-4 py-3.5 text-base min-h-[48px] sm:min-h-[48px] lg:min-h-[44px]">
             <option>Customers</option>
             <option>Clients</option>
             <option>Employees</option>
             <option>Partners</option>
           </select>
-          <Button onClick={handleGenerate} disabled={loading} className="w-full cursor-pointer min-h-[48px]">
+          <Button onClick={handleGenerate} disabled={loading} className="w-full cursor-pointer min-h-[48px] sm:min-h-[48px] lg:min-h-[44px]">
             {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
             Generate Business Greeting
           </Button>

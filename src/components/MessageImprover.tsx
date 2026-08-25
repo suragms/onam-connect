@@ -63,7 +63,7 @@ export function MessageImprover({ onImproved, onError, onLoadingChange }: Messag
             type="button"
             disabled={loading}
             onClick={() => handleImprove(imp)}
-            className="rounded-full border border-border/60 px-3 py-2 text-xs font-medium hover:border-primary/40 cursor-pointer min-h-[44px] disabled:opacity-50 flex-1 sm:flex-none"
+            className="rounded-full border border-border/60 bg-muted/40 px-3 py-2.5 text-xs font-medium transition-colors hover:border-primary/40 hover:bg-primary/5 cursor-pointer min-h-[44px] sm:min-h-[40px] lg:min-h-[36px] disabled:opacity-50 flex-1 sm:flex-none text-wrap"
           >
             {imp}
           </button>

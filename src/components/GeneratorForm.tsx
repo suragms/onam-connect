@@ -84,7 +84,7 @@ export const GeneratorForm = forwardRef<GeneratorFormHandle, GeneratorFormProps>
     }), [handleGenerate, update, config]);
 
     const selectClass =
-      "w-full rounded-xl border border-input bg-background px-4 py-3 text-base transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 min-h-[48px]";
+      "w-full rounded-xl border border-input bg-background px-4 py-3.5 text-base transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 min-h-[48px] sm:min-h-[48px] lg:min-h-[44px]";
 
     return (
       <motion.div
@@ -158,13 +158,13 @@ export const GeneratorForm = forwardRef<GeneratorFormHandle, GeneratorFormProps>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1.5 block text-sm font-medium">Length</label>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {LENGTHS.map((l) => (
                   <button
                     key={l}
                     type="button"
                     onClick={() => update({ length: l })}
-                    className={`flex-1 rounded-xl border px-2 py-3 text-sm font-medium transition-all min-h-[48px] cursor-pointer ${
+                    className={`flex-1 min-w-[80px] rounded-xl border px-3 py-3.5 text-sm font-medium transition-all min-h-[48px] sm:min-h-[48px] lg:min-h-[44px] cursor-pointer ${
                       config.length === l
                         ? "border-primary bg-primary/10 text-primary"
                         : "border-border text-muted-foreground hover:border-primary/40"
