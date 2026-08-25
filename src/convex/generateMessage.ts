@@ -6,7 +6,7 @@ import type { ActionCtx } from "./_generated/server";
 import { v } from "convex/values";
 
 const GEMINI_API_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
 
 const MAX_INSTRUCTIONS = 500;
 const MAX_NAME = 80;

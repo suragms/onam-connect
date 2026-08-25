@@ -143,7 +143,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const body = req.body as GenerateRequest;
     const prompt = buildPrompt(body);
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     const result = await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
       generationConfig: {

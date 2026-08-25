@@ -1,8 +1,8 @@
 /** Models tried in order when one is overloaded or unavailable. */
 const GEMINI_MODELS = [
-  "gemini-3.1-flash-lite",
-  "gemini-3-flash-preview",
-  "gemini-flash-latest",
+  "gemini-1.5-flash",
+  "gemini-1.5-flash-latest",
+  "gemini-1.5-pro",
 ] as const;
 
 export interface GeminiResult {
