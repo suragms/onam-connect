@@ -11,7 +11,7 @@ export const checkAndIncrement = internalMutation({
     const now = Date.now();
     const existing = await ctx.db
       .query("rateLimits")
-      .withIndex("by_client", (q: { eq: (f: string, v: string) => unknown }) => q.eq("clientId", clientId))
+      .withIndex("by_client", (q: any) => q.eq("clientId", clientId))
       .first();
 
     if (!existing || now - existing.windowStart > WINDOW_MS) {
