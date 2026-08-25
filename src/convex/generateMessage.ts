@@ -182,7 +182,7 @@ const generatorArgs = {
 
 export const generateMessage = action({
   args: generatorArgs,
-  handler: async (ctx: ActionCtx, args) => {
+  handler: async (ctx: ActionCtx, args: any) => {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       throw new Error("AI service is not configured. Please try again later.");
@@ -226,7 +226,7 @@ export const improveMessage = action({
     improvement: v.string(),
     language: v.optional(v.string()),
   },
-  handler: async (ctx: ActionCtx, args) => {
+  handler: async (ctx: ActionCtx, args: any) => {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) throw new Error("AI service is not configured.");
 
@@ -263,7 +263,7 @@ export const generateSocialCaption = action({
     tone: v.string(),
     topic: v.optional(v.string()),
   },
-  handler: async (ctx: ActionCtx, args) => {
+  handler: async (ctx: ActionCtx, args: any) => {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) throw new Error("AI service is not configured.");
 
