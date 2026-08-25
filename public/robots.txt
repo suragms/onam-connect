@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://onamconnect.vercel.app/sitemap.xml
 Sitemap: https://onamconnect.app/sitemap.xml
