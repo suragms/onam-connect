@@ -26,7 +26,7 @@ const SEO_CONTENT: Record<string, { title: string; description: string; config: 
   },
   "onam-wishes-for-friends": {
     title: "Onam Wishes for Friends",
-    description: "Fun, friendly, and heartfelt Onam wishes for your best friends. Generate with AI in seconds.",
+    description: "Fun, friendly, and heartfelt Onam wishes for your closest friends. Generate with AI in seconds.",
     config: { recipient: "Friends", tone: "Friendly" },
   },
   "onam-wishes-for-family": {
