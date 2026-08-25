@@ -1,6 +1,4 @@
 import { useCallback } from "react";
-import { useAction } from "convex/react";
-import { api } from "@/convex/_generated/api";
 import type { GeneratedMessage } from "@/types/generator";
 import { validateGeminiResult } from "@/lib/geminiCore";
 
@@ -30,7 +28,6 @@ async function localAI(path: string, body: unknown): Promise<GeneratedMessage> {
   return validateGeminiResult(data) as GeneratedMessage;
 }
 
-/** Legacy Convex deployment only accepts these fields until redeployed. */
 function toLegacyGenerateArgs(args: Record<string, unknown>) {
   return {
     recipient: String(args.recipient || "Everyone"),
@@ -51,7 +48,6 @@ function toLegacyGenerateArgs(args: Record<string, unknown>) {
   };
 }
 
-/** Dev uses local Vite API only (Convex cloud may be on an old schema). */
 export function useAIActions() {
   const generateMessage = useCallback(
     async (args: Record<string, unknown>) => {

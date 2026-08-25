@@ -1,13 +1,11 @@
 import "@vly-ai/integrations";
 import Toaster from "@/components/ui/sonner";
 import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
-import { ConvexProvider, ConvexReactClient } from "convex/react";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import { HashScroll } from "./components/HashScroll.tsx";
 import { MobileBottomNav } from "./components/MobileBottomNav.tsx";
-import { MoreBottomSheet } from "./components/MoreBottomSheet.tsx";
 import "./index.css";
 
 const Landing = lazy(() => import("./pages/Landing.tsx"));
@@ -74,9 +72,6 @@ class RootErrorBoundary extends React.Component<
   }
 }
 
-const convexUrl = import.meta.env.VITE_CONVEX_URL || "https://benevolent-poodle-175.convex.cloud";
-const convex = new ConvexReactClient(convexUrl);
-
 function RouteSyncer() {
   const location = useLocation();
   useEffect(() => {
@@ -101,37 +96,35 @@ createRoot(document.getElementById("root")!).render(
       <ToolbarErrorBoundary>
         <VlyToolbar />
       </ToolbarErrorBoundary>
-      <ConvexProvider client={convex}>
-        <BrowserRouter>
-          <RouteSyncer />
-          <HashScroll />
-          <MobileBottomNav />
-          <Suspense fallback={<RouteLoading />}>
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/generator" element={<GeneratorPage />} />
-              <Route path="/card-studio" element={<CardStudioPage />} />
-              <Route path="/saved" element={<SavedPage />} />
-              <Route path="/history" element={<HistoryPage />} />
-              <Route path="/templates" element={<TemplatesPage />} />
-              <Route path="/improve" element={<ImprovePage />} />
-              <Route path="/social-captions" element={<SocialCaptionsPage />} />
-              <Route path="/business" element={<BusinessPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/onam-wishes" element={<SeoPage slug="onam-wishes" />} />
-              <Route path="/malayalam-onam-wishes" element={<SeoPage slug="malayalam-onam-wishes" />} />
-              <Route path="/onam-messages" element={<SeoPage slug="onam-messages" />} />
-              <Route path="/onam-greetings" element={<SeoPage slug="onam-greetings" />} />
-              <Route path="/onam-wishes-for-friends" element={<SeoPage slug="onam-wishes-for-friends" />} />
-              <Route path="/onam-wishes-for-family" element={<SeoPage slug="onam-wishes-for-family" />} />
-              <Route path="/onam-wishes-for-office" element={<SeoPage slug="onam-wishes-for-office" />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-        <Toaster />
-      </ConvexProvider>
+      <BrowserRouter>
+        <RouteSyncer />
+        <HashScroll />
+        <MobileBottomNav />
+        <Suspense fallback={<RouteLoading />}>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/generator" element={<GeneratorPage />} />
+            <Route path="/card-studio" element={<CardStudioPage />} />
+            <Route path="/saved" element={<SavedPage />} />
+            <Route path="/history" element={<HistoryPage />} />
+            <Route path="/templates" element={<TemplatesPage />} />
+            <Route path="/improve" element={<ImprovePage />} />
+            <Route path="/social-captions" element={<SocialCaptionsPage />} />
+            <Route path="/business" element={<BusinessPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/onam-wishes" element={<SeoPage slug="onam-wishes" />} />
+            <Route path="/malayalam-onam-wishes" element={<SeoPage slug="malayalam-onam-wishes" />} />
+            <Route path="/onam-messages" element={<SeoPage slug="onam-messages" />} />
+            <Route path="/onam-greetings" element={<SeoPage slug="onam-greetings" />} />
+            <Route path="/onam-wishes-for-friends" element={<SeoPage slug="onam-wishes-for-friends" />} />
+            <Route path="/onam-wishes-for-family" element={<SeoPage slug="onam-wishes-for-family" />} />
+            <Route path="/onam-wishes-for-office" element={<SeoPage slug="onam-wishes-for-office" />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+      <Toaster />
     </RootErrorBoundary>
   </StrictMode>,
 );
