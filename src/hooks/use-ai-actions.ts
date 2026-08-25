@@ -49,9 +49,14 @@ export function useAIActions() {
       if (import.meta.env.DEV) {
         return localAI("/api/ai/generate", args);
       }
-      return validateGeminiResult(
-        await convexGenerate(args as Parameters<typeof convexGenerate>[0]),
-      ) as GeneratedMessage;
+      try {
+        return validateGeminiResult(
+          await convexGenerate(args as Parameters<typeof convexGenerate>[0]),
+        ) as GeneratedMessage;
+      } catch (err) {
+        console.warn("[Convex Action Failed, trying Vercel /api/ai/generate fallback]:", err);
+        return localAI("/api/ai/generate", args);
+      }
     },
     [convexGenerate],
   );
@@ -61,9 +66,14 @@ export function useAIActions() {
       if (import.meta.env.DEV) {
         return localAI("/api/ai/improve", args);
       }
-      return validateGeminiResult(
-        await convexImprove(args as Parameters<typeof convexImprove>[0]),
-      ) as GeneratedMessage;
+      try {
+        return validateGeminiResult(
+          await convexImprove(args as Parameters<typeof convexImprove>[0]),
+        ) as GeneratedMessage;
+      } catch (err) {
+        console.warn("[Convex Action Failed, trying Vercel /api/ai/improve fallback]:", err);
+        return localAI("/api/ai/improve", args);
+      }
     },
     [convexImprove],
   );
@@ -73,9 +83,14 @@ export function useAIActions() {
       if (import.meta.env.DEV) {
         return localAI("/api/ai/social-caption", args);
       }
-      return validateGeminiResult(
-        await convexCaption(args as Parameters<typeof convexCaption>[0]),
-      ) as GeneratedMessage;
+      try {
+        return validateGeminiResult(
+          await convexCaption(args as Parameters<typeof convexCaption>[0]),
+        ) as GeneratedMessage;
+      } catch (err) {
+        console.warn("[Convex Action Failed, trying Vercel /api/ai/social-caption fallback]:", err);
+        return localAI("/api/ai/social-caption", args);
+      }
     },
     [convexCaption],
   );

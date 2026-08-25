@@ -90,7 +90,7 @@ export { Sidebar, SidebarProvider, SidebarTrigger, SidebarInset, SidebarHeader, 
 export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle } from "./chart"; // ~20KB+ (requires recharts - very large!)
 
 // Notifications
-export { Toaster } from "./sonner"; // ~8KB - Toast notifications
+export { default as Toaster } from "./sonner"; // ~8KB - Toast notifications
 
 // ============================================================================
 // USAGE EXAMPLES FOR AI AGENTS
