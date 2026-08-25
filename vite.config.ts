@@ -3,11 +3,10 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
-import { geminiApiPlugin } from "./vite-plugin-gemini-api";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), geminiApiPlugin(), vlyPlugin(), tailwindcss()],
+  plugins: [react(), vlyPlugin(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -27,8 +26,7 @@ export default defineConfig({
         manualChunks: {
           // Vendor chunks for large libraries
           'react-vendor': ['react', 'react-dom', 'react-router'],
-          'convex-vendor': ['convex'],
-          // Large UI library chunks
+                    // Large UI library chunks
           'radix-ui': [
             '@radix-ui/react-accordion',
             '@radix-ui/react-alert-dialog',
@@ -84,7 +82,6 @@ export default defineConfig({
       'react-dom',
       'react-dom/client',
       'react-router',
-      '@convex-dev/auth/react',
       'framer-motion',
     ],
   },
