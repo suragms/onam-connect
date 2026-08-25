@@ -1,3 +1,4 @@
+import React from "react"
 import {
   CircleCheckIcon,
   InfoIcon,
@@ -8,7 +9,7 @@ import {
 import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 
-const Toaster = ({ ...props }: ToasterProps) => {
+export function Toaster({ ...props }: ToasterProps) {
   const { theme = "system" } = useTheme()
 
   return (
@@ -35,5 +36,4 @@ const Toaster = ({ ...props }: ToasterProps) => {
   )
 }
 
-export { Toaster };
-export default Toaster;
+export default Toaster
