@@ -1,13 +1,26 @@
-const SITE_URL = "https://onamconnect.app";
+const SITE_URL = "https://onamconnect.vercel.app/";
+
+export function getSiteUrl(): string {
+  return SITE_URL;
+}
+
+/** Append the live site URL once at share/export time (not into editable AI text). */
+export function withSiteUrl(message: string): string {
+  const trimmed = message.trimEnd();
+  const url = SITE_URL.replace(/\/$/, "");
+  if (!trimmed) return SITE_URL;
+  if (trimmed.includes(url) || trimmed.includes(SITE_URL)) return trimmed;
+  return `${trimmed}\n\n${SITE_URL}`;
+}
 
 export function shareToWhatsApp(message: string): void {
-  const encoded = encodeURIComponent(message);
+  const encoded = encodeURIComponent(withSiteUrl(message));
   window.open(`https://wa.me/?text=${encoded}`, "_blank", "noopener,noreferrer");
 }
 
 export function shareToTelegram(message: string, url?: string): void {
   const text = encodeURIComponent(message);
-  const link = url ? encodeURIComponent(url) : encodeURIComponent(SITE_URL);
+  const link = encodeURIComponent(url || SITE_URL);
   window.open(
     `https://t.me/share/url?text=${text}&url=${link}`,
     "_blank",
@@ -29,13 +42,15 @@ export async function shareToFacebookWithFallback(
   message: string,
   url: string = SITE_URL,
 ): Promise<"shared" | "copied"> {
-  await copyMessage(message);
+  await copyMessage(withSiteUrl(message));
   shareToFacebook(url);
   return "copied";
 }
 
 export function shareToX(message: string, maxLength = 280): string {
-  const trimmed = message.length > maxLength ? message.slice(0, maxLength - 3) + "..." : message;
+  const withUrl = withSiteUrl(message);
+  const trimmed =
+    withUrl.length > maxLength ? withUrl.slice(0, maxLength - 3) + "..." : withUrl;
   const encoded = encodeURIComponent(trimmed);
   window.open(
     `https://x.com/intent/tweet?text=${encoded}`,
@@ -46,7 +61,7 @@ export function shareToX(message: string, maxLength = 280): string {
 }
 
 export function getXCharCount(message: string): number {
-  return message.length;
+  return withSiteUrl(message).length;
 }
 
 export async function copyMessage(message: string): Promise<boolean> {
@@ -69,6 +84,11 @@ export async function copyMessage(message: string): Promise<boolean> {
       return false;
     }
   }
+}
+
+/** Copy message with site URL appended once (for share/copy actions). */
+export async function copyMessageWithSiteUrl(message: string): Promise<boolean> {
+  return copyMessage(withSiteUrl(message));
 }
 
 export async function nativeShare(
@@ -101,24 +121,22 @@ export function canNativeShare(): boolean {
 
 /** Signal has no web share API — use native share or copy. */
 export async function shareViaSignal(message: string): Promise<"native" | "copied" | "failed"> {
+  const payload = withSiteUrl(message);
   if (canNativeShare()) {
-    const ok = await nativeShare("ONAMCONNECT", message);
+    const ok = await nativeShare("ONAMCONNECT", payload, SITE_URL);
     if (ok) return "native";
   }
-  const ok = await copyMessage(message);
+  const ok = await copyMessage(payload);
   return ok ? "copied" : "failed";
 }
 
 /** Arattai has no official web API — native share or copy fallback. */
 export async function shareViaArattai(message: string): Promise<"native" | "copied" | "failed"> {
+  const payload = withSiteUrl(message);
   if (canNativeShare()) {
-    const ok = await nativeShare("ONAMCONNECT", message);
+    const ok = await nativeShare("ONAMCONNECT", payload, SITE_URL);
     if (ok) return "native";
   }
-  const ok = await copyMessage(message);
+  const ok = await copyMessage(payload);
   return ok ? "copied" : "failed";
-}
-
-export function getSiteUrl(): string {
-  return SITE_URL;
 }

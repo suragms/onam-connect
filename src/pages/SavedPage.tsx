@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ShareIconRow } from "@/components/ShareIconRow";
-import { copyMessage } from "@/lib/sharing";
+import { copyMessageWithSiteUrl } from "@/lib/sharing";
 import {
   getHistory,
   getFavorites,
@@ -80,7 +80,7 @@ export default function SavedPage() {
           <button
             type="button"
             onClick={async () => {
-              await copyMessage(msg.message);
+              await copyMessageWithSiteUrl(msg.message);
               toast.success("Copied");
             }}
             className="inline-flex items-center gap-1 rounded-lg border px-3 py-2.5 text-xs cursor-pointer min-h-[44px] flex-1 sm:flex-none"

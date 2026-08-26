@@ -8,7 +8,7 @@ import { CARD_TEMPLATES, CARD_FORMATS } from "@/lib/generatorOptions";
 import { snapdom } from "@zumer/snapdom";
 import { toast } from "sonner";
 import { Download, Share2 } from "lucide-react";
-import { nativeShare, shareImage } from "@/lib/sharing";
+import { shareImage } from "@/lib/sharing";
 
 const TEMPLATE_STYLES: Record<string, string> = {
   "Traditional Kerala": "from-green-800 via-green-700 to-emerald-900 text-white",

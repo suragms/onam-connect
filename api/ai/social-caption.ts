@@ -1,5 +1,11 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import {
+  FRIENDLY_EMPTY,
+  FRIENDLY_NOT_CONFIGURED,
+  FRIENDLY_UNAVAILABLE,
+  toFriendlyAiError,
+} from '../_lib/friendlyError';
 
 interface SocialCaptionRequest {
   platform: string;
@@ -52,7 +58,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return res.status(503).json({ error: 'GEMINI_API_KEY is not configured in Vercel environment variables.' });
+    return res.status(503).json({ error: FRIENDLY_NOT_CONFIGURED });
   }
 
   try {
@@ -68,7 +74,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-3.5-flash-lite'];
     let text = '';
-    let lastErr: any = null;
+    let lastErr: unknown = null;
 
     for (const modelName of modelsToTry) {
       try {
@@ -84,27 +90,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         });
         text = result.response.text();
         if (text) break;
-      } catch (err: any) {
+      } catch (err: unknown) {
         lastErr = err;
-        console.warn(`[Vercel AI Model ${modelName} failed]:`, err?.message || err);
+        const msg = err instanceof Error ? err.message : String(err);
+        console.warn(`[Vercel AI Model ${modelName} failed]:`, msg);
       }
     }
 
     if (!text) {
-      const errMsg = lastErr?.message || 'Gemini AI service unavailable. Please try again.';
-      return res.status(500).json({ error: errMsg });
+      console.error('Social caption: all models failed', lastErr);
+      return res.status(500).json({ error: FRIENDLY_UNAVAILABLE });
     }
 
     const parsed = parseGeminiResponse(text);
 
     if (!parsed.message && !parsed.shortMessage && !parsed.socialMessage) {
-      return res.status(500).json({ error: 'AI returned an empty response. Please try again.' });
+      return res.status(500).json({ error: FRIENDLY_EMPTY });
     }
 
     return res.status(200).json(parsed);
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : 'Caption generation failed';
     console.error('Social caption error:', e);
-    return res.status(500).json({ error: message });
+    return res.status(500).json({ error: toFriendlyAiError(e) });
   }
 }

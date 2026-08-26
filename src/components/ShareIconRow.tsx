@@ -5,13 +5,14 @@ import {
   shareToX,
   canNativeShare,
   nativeShare,
-  copyMessage,
+  copyMessageWithSiteUrl,
+  getSiteUrl,
 } from "@/lib/sharing";
 import { toast } from "sonner";
 
 const SHARE_ACTIONS = [
   { label: "WhatsApp", icon: "💬", action: (msg: string) => shareToWhatsApp(msg) },
-  { label: "Telegram", icon: "✈️", action: (msg: string) => shareToTelegram(msg) },
+  { label: "Telegram", icon: "✈️", action: (msg: string) => shareToTelegram(msg, getSiteUrl()) },
   {
     label: "X",
     icon: "𝕏",
@@ -29,9 +30,9 @@ interface ShareIconRowProps {
 
 export function ShareIconRow({ message, className = "" }: ShareIconRowProps) {
   async function handleNativeShare() {
-    const ok = await nativeShare("ONAMCONNECT", message);
+    const ok = await nativeShare("ONAMCONNECT", message, getSiteUrl());
     if (!ok) {
-      const copied = await copyMessage(message);
+      const copied = await copyMessageWithSiteUrl(message);
       toast[copied ? "success" : "error"](copied ? "Copied — paste to share." : "Share failed.");
     }
   }

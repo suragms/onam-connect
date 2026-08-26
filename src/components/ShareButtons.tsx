@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  shareToWhatsApp, shareToTelegram, shareToX, shareToFacebook,
+  shareToWhatsApp, shareToTelegram, shareToX,
   shareToFacebookWithFallback, nativeShare, canNativeShare,
-  copyMessage, shareViaSignal, shareViaArattai, getXCharCount, getSiteUrl,
+  copyMessageWithSiteUrl, shareViaSignal, shareViaArattai, getXCharCount, getSiteUrl,
 } from "@/lib/sharing";
 import { toast } from "sonner";
 
@@ -50,7 +50,7 @@ export function ShareButtons({ message, shortMessage, socialMessage, hashtags }:
       else toast.error("Could not share.");
     }},
     { name: "Copy Message", icon: "📋", action: async () => {
-      const ok = await copyMessage(fullMessage);
+      const ok = await copyMessageWithSiteUrl(fullMessage);
       toast[ok ? "success" : "error"](ok ? "Message copied!" : "Failed to copy.");
     }},
   ];

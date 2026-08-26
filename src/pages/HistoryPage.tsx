@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ShareIconRow } from "@/components/ShareIconRow";
-import { copyMessage } from "@/lib/sharing";
+import { copyMessageWithSiteUrl } from "@/lib/sharing";
 import {
   getHistory, getFavorites, deleteMessage, toggleFavorite,
   clearHistory, formatRelativeTime, groupHistoryByDate,
@@ -109,7 +109,7 @@ export default function HistoryPage() {
                       </div>
                       <p className="mt-2 text-sm line-clamp-2">{msg.message}</p>
                       <div className="mt-3 flex flex-wrap gap-2">
-                        <button type="button" onClick={async () => { await copyMessage(msg.message); toast.success("Copied"); }} className="inline-flex items-center gap-1 rounded-lg border px-3 py-2.5 text-xs cursor-pointer min-h-[44px] flex-1 sm:flex-none">
+                        <button type="button" onClick={async () => { await copyMessageWithSiteUrl(msg.message); toast.success("Copied"); }} className="inline-flex items-center gap-1 rounded-lg border px-3 py-2.5 text-xs cursor-pointer min-h-[44px] flex-1 sm:flex-none">
                           <Copy className="h-3.5 w-3.5" /> Copy
                         </button>
                         <button type="button" onClick={() => { toggleFavorite(msg.id); forceRefresh(); toast.success(msg.isFavorite ? "Removed from favorites." : "Added to favorites."); }} className="inline-flex items-center gap-1 rounded-lg border px-3 py-2.5 text-xs cursor-pointer min-h-[44px] flex-1 sm:flex-none">

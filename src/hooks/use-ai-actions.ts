@@ -15,17 +15,26 @@ async function localAI(path: string, body: unknown): Promise<GeneratedMessage> {
   }
 
   const rawText = await res.text();
-  let data: any;
+  let data: { error?: string; message?: string; shortMessage?: string; socialMessage?: string; hashtags?: string[] };
   try {
-    data = JSON.parse(rawText);
+    data = JSON.parse(rawText) as typeof data;
   } catch {
     throw new Error("Server returned an unexpected response. Please check your configuration and try again.");
   }
 
   if (!res.ok) {
-    throw new Error(data.error || "We couldn't create your wish right now. Please try again.");
+    const msg =
+      typeof data?.error === "string" && data.error && !/api[_ ]?key|stack|GEMINI/i.test(data.error)
+        ? data.error
+        : "We couldn't create your wish right now. Please try again.";
+    throw new Error(msg);
   }
-  return validateGeminiResult(data) as GeneratedMessage;
+  return validateGeminiResult({
+    message: data.message ?? "",
+    shortMessage: data.shortMessage ?? "",
+    socialMessage: data.socialMessage ?? "",
+    hashtags: Array.isArray(data.hashtags) ? data.hashtags : [],
+  }) as GeneratedMessage;
 }
 
 function toLegacyGenerateArgs(args: Record<string, unknown>) {

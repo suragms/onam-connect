@@ -1,7 +1,7 @@
 {
-  "name": "ONAMCONNECT — AI Onam Wishes",
+  "name": "ONAMCONNECT",
   "short_name": "ONAMCONNECT",
-  "description": "Create personalized Onam wishes in Malayalam, English and Manglish with AI.",
+  "description": "AI-powered Onam and Thiruvonam wishes. Create. Celebrate. Connect.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#faf9f6",

@@ -4,7 +4,7 @@ import { Copy, Heart, Pencil, RefreshCw, Download, RotateCcw } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ShareButtons } from "./ShareButtons";
-import { copyMessage } from "@/lib/sharing";
+import { copyMessage, copyMessageWithSiteUrl } from "@/lib/sharing";
 import { saveMessage, toggleFavorite, updateMessage } from "@/lib/storage";
 import { toast } from "sonner";
 import type { GeneratedMessage, GeneratorConfig } from "@/types/generator";
@@ -69,7 +69,7 @@ export function MessageResult({
   }, [message.message, message.shortMessage, message.socialMessage]);
 
   async function handleCopy() {
-    const ok = await copyMessage(activeText);
+    const ok = await copyMessageWithSiteUrl(activeText);
     toast[ok ? "success" : "error"](ok ? "Copied to clipboard." : "Failed to copy.");
   }
 

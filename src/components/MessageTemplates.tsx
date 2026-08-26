@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Copy, Wand2, Check, Search } from "lucide-react";
 import { TEMPLATES, TEMPLATE_CATEGORIES, type TemplateCategory } from "@/lib/templates";
-import { copyMessage } from "@/lib/sharing";
+import { copyMessageWithSiteUrl } from "@/lib/sharing";
 import { ShareIconRow } from "@/components/ShareIconRow";
 import { toast } from "sonner";
 import { Link } from "react-router";
@@ -32,7 +32,7 @@ export function MessageTemplates() {
   }, [activeCategory, searchQuery]);
 
   async function handleCopy(id: string, message: string) {
-    const ok = await copyMessage(message);
+    const ok = await copyMessageWithSiteUrl(message);
     if (ok) {
       setCopiedId(id);
       toast.success("Greeting copied to clipboard.");

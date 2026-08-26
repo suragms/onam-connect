@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate, useSearchParams } from "react-router";
-import { Copy, Share2, ArrowRight, Sparkles, Heart, Users, Briefcase, MessageSquare, Camera, Instagram, Star } from "lucide-react";
-import { copyMessage } from "@/lib/sharing";
+import { useNavigate } from "react-router";
+import { Copy, ArrowRight, Sparkles } from "lucide-react";
+import { copyMessageWithSiteUrl } from "@/lib/sharing";
 import { ShareIconRow } from "@/components/ShareIconRow";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -148,7 +148,6 @@ const CARD_STYLES = [
 
 export function ThiruvonamWishes() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState("all");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
@@ -171,7 +170,7 @@ export function ThiruvonamWishes() {
   };
 
   const handleCopy = async (id: string, message: string) => {
-    const ok = await copyMessage(message);
+    const ok = await copyMessageWithSiteUrl(message);
     if (ok) {
       setCopiedId(id);
       toast.success("Copied to clipboard!");

@@ -107,6 +107,16 @@ export default function AboutPage() {
 
         <div className="mt-10 text-center text-sm text-muted-foreground">
           <p>Built with ❤️ for Onam celebrations everywhere</p>
+          <p className="mt-1">
+            <a
+              href="https://onamconnect.vercel.app/"
+              className="underline underline-offset-2 hover:text-foreground"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://onamconnect.vercel.app/
+            </a>
+          </p>
           <p className="mt-1">&copy; 2026 ONAMCONNECT. Create. Celebrate. Connect.</p>
         </div>
       </main>

@@ -1,10 +1,3 @@
-const GEMINI_MODELS = [
-  "gemini-2.5-flash",
-  "gemini-2.0-flash",
-  "gemini-3.5-flash-lite",
-  "gemini-2.5-pro",
-] as const;
-
 export interface GeminiResult {
   message: string;
   shortMessage: string;
@@ -26,21 +19,11 @@ export interface GenerateInput {
   variation?: string;
 }
 
-function isRetryableGeminiError(message: string, status: number): boolean {
-  const lower = message.toLowerCase();
-  return (
-    status === 429 ||
-    status === 503 ||
-    lower.includes("high demand") ||
-    lower.includes("overloaded") ||
-    lower.includes("resource exhausted") ||
-    lower.includes("unavailable")
-  );
-}
-
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+/**
+ * Prompt builders and response helpers for Gemini.
+ * The API key must only be used in Vercel serverless functions (api/ai/*).
+ * Never call Gemini from the browser with a client-side key.
+ */
 
 export function buildPrompt(input: GenerateInput): string {
   const langMap: Record<string, string> = {
@@ -117,92 +100,6 @@ RESPOND IN VALID JSON ONLY — no markdown, no code fences:
 }`;
 }
 
-async function callGeminiOnce(
-  apiKey: string,
-  model: string,
-  prompt: string,
-): Promise<string> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 45000);
-
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      signal: controller.signal,
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.88,
-          topP: 0.95,
-          maxOutputTokens: 2048,
-          responseMimeType: "application/json",
-        },
-        safetySettings: [
-          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-          { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-          { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-        ],
-      }),
-    });
-
-    if (!response.ok) {
-      let detail = "";
-      try {
-        const errBody = (await response.json()) as { error?: { message?: string } };
-        detail = errBody?.error?.message || "";
-      } catch {
-        /* ignore */
-      }
-      if (response.status === 401 || response.status === 403) {
-        throw new Error("AI service is temporarily unavailable. Please check the API key.");
-      }
-      const err = new Error(detail || "We couldn't create your wish right now. Please try again.");
-      if (isRetryableGeminiError(detail, response.status)) {
-        (err as Error & { retryable: boolean }).retryable = true;
-      }
-      throw err;
-    }
-
-    const data = (await response.json()) as {
-      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
-    };
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) throw new Error("Empty response from AI. Please try again.");
-    return text;
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-export async function callGemini(apiKey: string, prompt: string): Promise<string> {
-  let lastError: Error | null = null;
-
-  for (const model of GEMINI_MODELS) {
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        return await callGeminiOnce(apiKey, model, prompt);
-      } catch (e: unknown) {
-        lastError = e instanceof Error ? e : new Error(String(e));
-        const retryable =
-          (lastError as Error & { retryable?: boolean }).retryable ||
-          isRetryableGeminiError(lastError.message, 503);
-
-        if (retryable) {
-          await sleep(1200 * (attempt + 1));
-          continue;
-        }
-        throw lastError;
-      }
-    }
-  }
-
-  throw new Error(
-    "AI is busy right now. Please wait a few seconds and try again.",
-  );
-}
-
 export function parseGeminiResponse(text: string): GeminiResult {
   try {
     const parsed = JSON.parse(text);
@@ -228,7 +125,7 @@ export function parseGeminiResponse(text: string): GeminiResult {
 
 export function validateGeminiResult(result: GeminiResult): GeminiResult {
   if (!result.message && !result.shortMessage && !result.socialMessage) {
-    throw new Error("AI returned an empty response. Please try again.");
+    throw new Error("We couldn't create your wish right now. Please try again.");
   }
   return result;
 }

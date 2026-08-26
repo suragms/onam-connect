@@ -1,4 +1,4 @@
-const CACHE_NAME = "onamconnect-v2";
+const CACHE_NAME = "onamconnect-v1.0.0";
 const ASSETS_TO_CACHE = ["/manifest.webmanifest", "/logo.jpg", "/cover.jpg"];
 
 self.addEventListener("install", (event) => {

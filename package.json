@@ -1,7 +1,10 @@
 {
-  "name": "vite-template",
-  "private": true,
-  "version": "0.0.0",
+  "name": "onamconnect",
+  "private": false,
+  "version": "1.0.0",
+  "description": "AI-powered Onam and Thiruvonam wishes. Create. Celebrate. Connect.",
+  "homepage": "https://onamconnect.vercel.app/",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
